@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmtestapp.models.viewModels.CharactersListViewModel
+import com.example.cmtestapp.views.charactersList.CharactersListFragment.OnCharactersListItemClicked
 
-class CharactersListAdapter : RecyclerView.Adapter<CharactersListViewHolder>() {
+class CharactersListAdapter(private val onItemClicked: OnCharactersListItemClicked) :
+    RecyclerView.Adapter<CharactersListViewHolder>() {
     private val items = listOf(
-        CharactersListViewModel("Petyr Baelish", "Aidan Gillen"),
-        CharactersListViewModel("Petyr Baelish", "Aidan Gillen"),
-        CharactersListViewModel("Petyr Baelish", "Aidan Gillen"),
-        CharactersListViewModel("Petyr Baelish", "Aidan Gillen")
+        CharactersListViewModel(0, "Petyr Baelish", "Aidan Gillen"),
+        CharactersListViewModel(1, "Petyr Baelish", "Aidan Gillen"),
+        CharactersListViewModel(2, "Petyr Baelish", "Aidan Gillen"),
+        CharactersListViewModel(3, "Petyr Baelish", "Aidan Gillen")
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersListViewHolder {
@@ -22,7 +24,7 @@ class CharactersListAdapter : RecyclerView.Adapter<CharactersListViewHolder>() {
 
     override fun onBindViewHolder(holder: CharactersListViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item)
+        holder.bind(item, onItemClicked)
     }
 
 }
