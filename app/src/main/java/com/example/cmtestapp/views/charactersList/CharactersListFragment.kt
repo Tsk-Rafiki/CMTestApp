@@ -1,17 +1,20 @@
 package com.example.cmtestapp.views.charactersList
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cmtestapp.R
-import kotlinx.android.synthetic.main.fragment_characters_list.*
+import com.example.cmtestapp.models.viewModels.CharactersListViewModel
+import com.example.cmtestapp.presenters.BaseFragment
+import com.example.cmtestapp.presenters.charactersList.CharactersListPresenter
+import com.example.cmtestapp.presenters.charactersList.ICharactersListPresenter
 import kotlinx.android.synthetic.main.fragment_characters_list.view.*
 
-class CharactersListFragment : Fragment() {
+class CharactersListFragment : BaseFragment<ICharactersListPresenter>(), ICharacterListView {
     private lateinit var adapter: CharactersListAdapter
+    override var presenter: ICharactersListPresenter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,9 +29,22 @@ class CharactersListFragment : Fragment() {
         return rootView
     }
 
+    override fun setData(data: List<CharactersListViewModel>) {
+        adapter.updateData(data)
+    }
+
+    override fun setupPresenter(presenter: ICharactersListPresenter) {
+        this.presenter = presenter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter?.getCharacterList(1)
+    }
+
     companion object {
         @JvmStatic
-        fun newInstance() = CharactersListFragment()
+        fun newInstance(presenter: ICharactersListPresenter) = CharactersListFragment()
     }
 
     interface OnCharactersListItemClicked {

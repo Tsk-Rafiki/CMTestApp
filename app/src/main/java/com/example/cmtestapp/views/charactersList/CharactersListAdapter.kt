@@ -8,7 +8,7 @@ import com.example.cmtestapp.views.charactersList.CharactersListFragment.OnChara
 
 class CharactersListAdapter(private val onItemClicked: OnCharactersListItemClicked) :
     RecyclerView.Adapter<CharactersListViewHolder>() {
-    private val items = listOf(
+    private var items = listOf(
         CharactersListViewModel(0, "Petyr Baelish", "Aidan Gillen"),
         CharactersListViewModel(1, "Petyr Baelish", "Aidan Gillen"),
         CharactersListViewModel(2, "Petyr Baelish", "Aidan Gillen"),
@@ -18,6 +18,11 @@ class CharactersListAdapter(private val onItemClicked: OnCharactersListItemClick
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return CharactersListViewHolder(inflater, parent)
+    }
+
+    fun updateData(data: List<CharactersListViewModel>) {
+        items = data
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = items.size
