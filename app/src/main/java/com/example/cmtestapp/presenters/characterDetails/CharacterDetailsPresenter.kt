@@ -7,10 +7,11 @@ import com.example.cmtestapp.models.dto.ICharacterResponse
 import com.example.cmtestapp.models.viewModels.CharacterDetailsViewModel
 import com.example.cmtestapp.presenters.BasePresenter
 import com.example.cmtestapp.views.characterDetails.ICharacterDetailsView
-import com.example.cmtestapp.views.charactersList.ICharacterListView
 
 class CharacterDetailsPresenter(private val repository: ICharactersRepository) :
     BasePresenter(repository), ICharacterDetailsPresenter {
+
+    private val emptyStringHolder = "No Information"
 
     override fun getCharacterDetails(characterId: Int) {
         repository.getCharacterDetails(characterId)
@@ -22,13 +23,18 @@ class CharacterDetailsPresenter(private val repository: ICharactersRepository) :
         res?.let {
             val viewModel = CharacterDetailsViewModel(
                 id = it.url.split('/').last().toIntOrNull() ?: 1,
-                name = it.name,
-                playedBy = it.playedBy,
-                tvSeries = it.tvSeries,
-                born = it.born,
-                died = it.died
+                name = handleEmptyString(it.name),
+                playedBy = handleEmptyString(it.playedBy.joinToString(", ")),
+                tvSeries = (it.tvSeries.joinToString(", ")),
+                born = handleEmptyString(it.born),
+                died = handleEmptyString(it.died)
             )
             (view as? ICharacterDetailsView)?.setData(viewModel)
         }
     }
+
+    private fun handleEmptyString(str: String) =
+        if (str.isEmpty()) emptyStringHolder
+        else str.trim()
+
 }

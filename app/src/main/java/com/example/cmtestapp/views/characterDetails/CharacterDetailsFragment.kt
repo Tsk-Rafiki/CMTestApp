@@ -51,8 +51,9 @@ class CharacterDetailsFragment(presenter: ICharacterDetailsPresenter) :
 
     override fun setData(data: CharacterDetailsViewModel) {
         name?.text = data.name
-        playedBy?.text = data.playedBy.joinToString(separator = ", ")
-        appearsInSeasons?.text = data.tvSeries.joinToString(separator = ", ")
+        playedBy?.text = data.playedBy
+        appearsInSeasons?.text = data.tvSeries
         born?.text = data.born
+        died?.text = data.died
     }
 }

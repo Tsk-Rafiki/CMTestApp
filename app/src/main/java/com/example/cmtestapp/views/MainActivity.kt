@@ -1,6 +1,5 @@
 package com.example.cmtestapp.views
 
-import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity

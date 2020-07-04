@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cmtestapp.R
 import com.example.cmtestapp.models.viewModels.CharactersListViewModel
 import com.example.cmtestapp.views.BaseFragment
@@ -21,6 +22,7 @@ class CharactersListFragment(presenter: ICharactersListPresenter) : BaseFragment
         val rootView = inflater.inflate(R.layout.fragment_characters_list, container, false)
         val clickListener = this.activity as OnCharactersListItemClicked
         adapter = CharactersListAdapter(clickListener)
+        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         rootView.recyclerView?.layoutManager = LinearLayoutManager(this.context)
         rootView.recyclerView?.adapter = adapter
         adapter.notifyDataSetChanged()
