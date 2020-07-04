@@ -2,8 +2,8 @@ package com.example.cmtestapp.views
 
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.cmtestapp.R
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        title = "Game of Thrones characters"
         charactersRepository = CharactersRepository(this)
         openCharactersListScreen()
         registerBroadcastReceiver(charactersRepository)
@@ -67,12 +68,22 @@ class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragments, fragment)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        ft.addToBackStack(name)
+        ft.addToBackStack(null)
         ft.commit()
     }
 
     override fun onItemClicked(characterId: Int) {
         openCharacterDetailsScreen(characterId)
+    }
+
+    override fun onBackPressed() {
+        val count = supportFragmentManager.backStackEntryCount
+        if (count == 1) {
+            finish()
+//            super.onBackPressed()
+        } else {
+            supportFragmentManager.popBackStack()
+        }
     }
 
     override fun onDestroy() {

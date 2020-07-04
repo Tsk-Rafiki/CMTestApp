@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">Game of Thrones characters</string>
+    <string name="app_name">CMTestApp</string>
     <string name="characterName">Name:</string>
     <string name="playedBy">Played by:</string>
     <string name="appears_in_seasons">Appears in seasons:</string>
     <string name="born">Born:</string>
-    <string name="died">Born</string>
+    <string name="died">Died:</string>
+    <string name="id">Id:</string>
 </resources>

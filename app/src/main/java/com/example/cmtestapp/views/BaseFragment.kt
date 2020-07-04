@@ -10,11 +10,17 @@ import com.example.cmtestapp.presenters.IPresenter
 
 abstract class BaseFragment<out T : IPresenter>(open val presenter: T) : Fragment() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("BaseFragment", "[${this.javaClass.canonicalName}]:onCreate()")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("BaseFragment", "[${this.javaClass.canonicalName}]:onCreateView()")
         presenter.setView(this)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -29,5 +35,10 @@ abstract class BaseFragment<out T : IPresenter>(open val presenter: T) : Fragmen
         super.onPause()
         presenter.onPause()
         Log.d("BaseFragment", "[${this.javaClass.canonicalName}]:onPause()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("BaseFragment", "[${this.javaClass.canonicalName}]:onDestroy()")
     }
 }

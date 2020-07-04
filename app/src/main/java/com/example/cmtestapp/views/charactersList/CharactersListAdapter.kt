@@ -9,7 +9,7 @@ import com.example.cmtestapp.views.charactersList.CharactersListFragment.OnChara
 
 class CharactersListAdapter(private val onItemClicked: OnCharactersListItemClicked) :
     RecyclerView.Adapter<CharactersListViewHolder>() {
-    private var items = listOf<CharactersListViewModelItem>()
+    private var items = mutableListOf<CharactersListViewModelItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -17,11 +17,16 @@ class CharactersListAdapter(private val onItemClicked: OnCharactersListItemClick
     }
 
     fun updateData(data: CharactersListViewModel) {
-        items = data.items
-        notifyDataSetChanged()
+        val startPosition = items.size + 1
+        items.addAll(data.items)
+        notifyItemRangeInserted(startPosition, data.items.size)
     }
 
     override fun getItemCount(): Int = items.size
+
+    override fun getItemId(position: Int) = items[position].hashCode().toLong()
+
+    override fun getItemViewType(position: Int) = items[position].hashCode()
 
     override fun onBindViewHolder(holder: CharactersListViewHolder, position: Int) {
         val item = items[position]

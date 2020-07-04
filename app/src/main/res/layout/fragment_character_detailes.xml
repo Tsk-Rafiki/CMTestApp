@@ -8,6 +8,33 @@
     tools:context=".views.characterDetails.CharacterDetailsFragment">
 
     <RelativeLayout
+        android:id="@+id/characterIdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="4dp">
+
+        <TextView
+            android:id="@+id/characterIdTitle"
+            style="@style/BodyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/id" />
+
+        <TextView
+            android:id="@+id/characterIdTv"
+            style="@style/BodyTextStyle"
+            android:layout_alignStart="@id/characterIdTitle"
+            android:textAlignment="viewEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorText" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
         android:id="@+id/nameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +52,9 @@
         <TextView
             android:id="@+id/name"
             style="@style/BodyTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/nameTitle"
+            android:textAlignment="viewEnd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="@color/colorText" />
@@ -48,7 +77,9 @@
         <TextView
             android:id="@+id/playedBy"
             style="@style/BodyTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/playedByTitle"
+            android:textAlignment="viewEnd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="@color/colorText" />
@@ -71,7 +102,9 @@
         <TextView
             android:id="@+id/appearsInSeasons"
             style="@style/BodyTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/appearsInSeasonsTitle"
+            android:textAlignment="viewEnd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="@color/colorText" />
@@ -94,7 +127,9 @@
         <TextView
             android:id="@+id/born"
             style="@style/BodyTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/bornTitle"
+            android:textAlignment="viewEnd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="@color/colorText" />
@@ -117,7 +152,9 @@
         <TextView
             android:id="@+id/died"
             style="@style/BodyTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/diedTitle"
+            android:textAlignment="viewEnd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="@color/colorText" />

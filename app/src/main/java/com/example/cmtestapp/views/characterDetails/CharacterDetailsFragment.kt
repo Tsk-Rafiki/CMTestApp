@@ -50,6 +50,7 @@ class CharacterDetailsFragment(presenter: ICharacterDetailsPresenter) :
     }
 
     override fun setData(data: CharacterDetailsViewModel) {
+        characterIdTv?.text = data.id.toString()
         name?.text = data.name
         playedBy?.text = data.playedBy
         appearsInSeasons?.text = data.tvSeries
