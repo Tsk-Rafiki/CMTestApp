@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cmtestapp.R
 
-import com.example.cmtestapp.models.viewModels.CharactersListViewModel
+import com.example.cmtestapp.models.viewModels.CharactersListViewModelItem
 import com.example.cmtestapp.views.charactersList.CharactersListFragment.OnCharactersListItemClicked
 
 class CharactersListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -17,7 +17,7 @@ class CharactersListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var description: TextView? = itemView.findViewById(R.id.descriptionText)
     private var characterListItem: LinearLayout? = itemView.findViewById(R.id.characterListItem)
 
-    fun bind(viewModel: CharactersListViewModel, onItemClicked: OnCharactersListItemClicked) {
+    fun bind(viewModel: CharactersListViewModelItem, onItemClicked: OnCharactersListItemClicked) {
         title?.text = viewModel.name
         description?.text = viewModel.details
         characterListItem?.setOnClickListener {

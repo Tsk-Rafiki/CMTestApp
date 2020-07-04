@@ -1,3 +1,6 @@
 package com.example.cmtestapp.models.viewModels
 
-class CharactersListViewModel(val id: Int, val name: String, val details: String)
+data class CharactersListViewModel (
+    override val id: Int,
+    val items: List<CharactersListViewModelItem>
+) : BaseViewModel(id)

@@ -1,8 +1,12 @@
 package com.example.cmtestapp.presenters.charactersList
 
-import com.example.cmtestapp.models.ICharactersRepository
+import android.util.Log
+import com.example.cmtestapp.models.charactersRepository.ICharactersRepository
 import com.example.cmtestapp.models.dto.CharactersListDTO
+import com.example.cmtestapp.models.dto.CharactersListDTOitem
+import com.example.cmtestapp.models.dto.ICharacterResponse
 import com.example.cmtestapp.models.viewModels.CharactersListViewModel
+import com.example.cmtestapp.models.viewModels.CharactersListViewModelItem
 import com.example.cmtestapp.presenters.BasePresenter
 import com.example.cmtestapp.views.charactersList.ICharacterListView
 
@@ -19,15 +23,17 @@ class CharactersListPresenter(private val repository: ICharactersRepository) :
         repository.getCharacterList(pageSize, page)
     }
 
-    override fun getResult(result: List<CharactersListDTO>) {
-        val viewModel = result.mapIndexed { index, item ->
-            CharactersListViewModel(
+    override fun setResult(result: ICharacterResponse) {
+        val res = result as? CharactersListDTO
+        Log.d("CharactersListPresenter", "Received data: $result")
+        val viewModel = res?.items?.mapIndexed { index, item ->
+            CharactersListViewModelItem(
                 id = index,
-                name = item.name,
-                details = item.playedBy[0]
+                name = item.name ?: "",
+                details = item.playedBy?.get(0) ?: ""
             )
-        }
-        (view as? ICharacterListView)?.setData(viewModel)
+        } ?: emptyList()
+        (view as? ICharacterListView)?.setData(CharactersListViewModel(id = 1, items = viewModel))
     }
 
     override fun onDestroy() {

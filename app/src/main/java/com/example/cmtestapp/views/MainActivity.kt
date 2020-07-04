@@ -1,19 +1,21 @@
 package com.example.cmtestapp.views
 
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.cmtestapp.R
-import com.example.cmtestapp.models.CharactersRepository
-import com.example.cmtestapp.models.ICharactersRepository
-import com.example.cmtestapp.models.NetworkAsyncTask
+import com.example.cmtestapp.models.CharactersBroadcastReceiver
+import com.example.cmtestapp.models.charactersRepository.CharactersRepository
+import com.example.cmtestapp.models.charactersRepository.ICharactersRepository
 import com.example.cmtestapp.presenters.characterDetails.CharacterDetailsPresenter
 import com.example.cmtestapp.presenters.charactersList.CharactersListPresenter
 import com.example.cmtestapp.views.characterDetails.CharacterDetailsFragment
 import com.example.cmtestapp.views.charactersList.CharactersListFragment
 import com.example.cmtestapp.views.charactersList.CharactersListFragment.OnCharactersListItemClicked
-
 
 enum class Fragments {
     CharacterDetails,
@@ -22,12 +24,24 @@ enum class Fragments {
 
 class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
     private lateinit var charactersRepository: ICharactersRepository
+    private lateinit var broadcastReceiver: CharactersBroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        charactersRepository = CharactersRepository(NetworkAsyncTask())
+        charactersRepository = CharactersRepository(this)
         openCharactersListScreen()
+        registerBroadcastReceiver(charactersRepository)
+    }
+
+    private fun registerBroadcastReceiver(charactersRepository: ICharactersRepository) {
+        broadcastReceiver = CharactersBroadcastReceiver()
+        broadcastReceiver.setupRepository(charactersRepository)
+        val intentFilter = IntentFilter(CharactersBroadcastReceiver.ACTION_RESPONSE).apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+        }
+        registerReceiver(broadcastReceiver, intentFilter)
+
     }
 
     private fun openCharactersListScreen() {
@@ -36,6 +50,7 @@ class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
                 charactersRepository
             )
         val charactersListFragment = CharactersListFragment.newInstance(presenter)
+        presenter.setView(charactersListFragment)
         changeFragment(charactersListFragment, Fragments.CharactersList.name)
     }
 
@@ -45,6 +60,7 @@ class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
                 charactersRepository
             )
         val characterDetailsFragment = CharacterDetailsFragment.newInstance(presenter, characterId)
+        presenter.setView(characterDetailsFragment)
         changeFragment(characterDetailsFragment, Fragments.CharacterDetails.name)
     }
 
@@ -61,7 +77,8 @@ class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
     }
 
     override fun onDestroy() {
-        charactersRepository.onDestroy()
         super.onDestroy()
+        charactersRepository.onDestroy()
+        unregisterReceiver(broadcastReceiver)
     }
 }

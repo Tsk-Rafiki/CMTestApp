@@ -1,20 +1,19 @@
 package com.example.cmtestapp.views.characterDetails
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.cmtestapp.R
 import com.example.cmtestapp.models.viewModels.CharacterDetailsViewModel
-import com.example.cmtestapp.presenters.BaseFragment
+import com.example.cmtestapp.views.BaseFragment
 import com.example.cmtestapp.presenters.characterDetails.CharacterDetailsPresenter
 import com.example.cmtestapp.presenters.characterDetails.ICharacterDetailsPresenter
 import kotlinx.android.synthetic.main.fragment_character_detailes.view.*
 
 private const val CHARACTER_ID = "characterId"
 
-class CharacterDetailsFragment : BaseFragment<ICharacterDetailsPresenter>(), ICharacterDetailsView {
+class CharacterDetailsFragment(presenter: ICharacterDetailsPresenter) : BaseFragment<ICharacterDetailsPresenter>(presenter), ICharacterDetailsView {
     private var characterId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +26,7 @@ class CharacterDetailsFragment : BaseFragment<ICharacterDetailsPresenter>(), ICh
     override fun onResume() {
         super.onResume()
         characterId?.let {
-            presenter?.getCharacterDetails(it)
+            presenter.getCharacterDetails(it)
         }
     }
 
@@ -43,7 +42,7 @@ class CharacterDetailsFragment : BaseFragment<ICharacterDetailsPresenter>(), ICh
     companion object {
         @JvmStatic
         fun newInstance(presenter: CharacterDetailsPresenter, characterId: Int) =
-            CharacterDetailsFragment()
+            CharacterDetailsFragment(presenter)
                 .apply {
                     arguments = Bundle().apply {
                         putInt(CHARACTER_ID, characterId)
@@ -51,11 +50,11 @@ class CharacterDetailsFragment : BaseFragment<ICharacterDetailsPresenter>(), ICh
                 }
     }
 
-    override fun setData(data: List<CharacterDetailsViewModel>) {
+    override fun setData(data: CharacterDetailsViewModel) {
 
     }
 
     override fun setupPresenter(presenter: ICharacterDetailsPresenter) {
-        this.presenter = presenter
+//        this.presenter = presenter
     }
 }
