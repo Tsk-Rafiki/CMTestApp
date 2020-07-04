@@ -6,16 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cmtestapp.R
-import com.example.cmtestapp.models.viewModels.BaseViewModel
 import com.example.cmtestapp.models.viewModels.CharactersListViewModel
-import com.example.cmtestapp.models.viewModels.CharactersListViewModelItem
 import com.example.cmtestapp.views.BaseFragment
 import com.example.cmtestapp.presenters.charactersList.ICharactersListPresenter
 import kotlinx.android.synthetic.main.fragment_characters_list.view.*
 
 class CharactersListFragment(presenter: ICharactersListPresenter) : BaseFragment<ICharactersListPresenter>(presenter), ICharacterListView {
     private lateinit var adapter: CharactersListAdapter
-//    override var presenter: ICharactersListPresenter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +30,6 @@ class CharactersListFragment(presenter: ICharactersListPresenter) : BaseFragment
     override fun setData(data: CharactersListViewModel) {
         adapter.updateData(data)
         adapter.notifyDataSetChanged()
-    }
-
-    override fun setupPresenter(presenter: ICharactersListPresenter) {
-//        this.presenter = presenter
     }
 
     override fun onResume() {

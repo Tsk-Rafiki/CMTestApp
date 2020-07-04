@@ -12,10 +12,6 @@ import com.example.cmtestapp.views.charactersList.ICharacterListView
 class CharacterDetailsPresenter(private val repository: ICharactersRepository) :
     BasePresenter(repository), ICharacterDetailsPresenter {
 
-    init {
-        repository.setupResultListener(this)
-    }
-
     override fun getCharacterDetails(characterId: Int) {
         repository.getCharacterDetails(characterId)
     }
@@ -23,11 +19,16 @@ class CharacterDetailsPresenter(private val repository: ICharactersRepository) :
     override fun setResult(result: ICharacterResponse) {
         val res = result as? CharacterDetailsDTO
         Log.d("CharactersListPresenter", "Received data: $result")
-        val viewModel = CharacterDetailsViewModel(
-            id = 1,
-            name = res?.name ?: "",
-            details = res?.playedBy?.get(0) ?: ""
-        )
-        (view as? ICharacterDetailsView)?.setData(viewModel)
+        res?.let {
+            val viewModel = CharacterDetailsViewModel(
+                id = it.url.split('/').last().toIntOrNull() ?: 1,
+                name = it.name,
+                playedBy = it.playedBy,
+                tvSeries = it.tvSeries,
+                born = it.born,
+                died = it.died
+            )
+            (view as? ICharacterDetailsView)?.setData(viewModel)
+        }
     }
 }

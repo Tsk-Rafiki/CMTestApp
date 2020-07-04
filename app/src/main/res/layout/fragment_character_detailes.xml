@@ -1,15 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".views.characterDetails.CharacterDetailsFragment">
 
-
-    <TextView
-        android:id="@+id/characterDetails"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/characterName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/playedBy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/playedBy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/appears_in_seasons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/appearsInSeasons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/born"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/born"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</LinearLayout>

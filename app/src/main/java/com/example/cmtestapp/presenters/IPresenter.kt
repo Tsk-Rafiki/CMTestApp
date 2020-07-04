@@ -4,5 +4,6 @@ import com.example.cmtestapp.views.BaseFragment
 
 interface IPresenter {
     fun setView(fragment: BaseFragment<IPresenter>)
-    fun onDestroy()
+    fun onResume()
+    fun onPause()
 }

@@ -5,5 +5,5 @@ import com.example.cmtestapp.presenters.charactersList.ICharactersListPresenter
 
 interface ICharacterListView {
     fun setData(data: CharactersListViewModel)
-    fun setupPresenter(presenter: ICharactersListPresenter)
+//    fun setupPresenter(presenter: ICharactersListPresenter)
 }
