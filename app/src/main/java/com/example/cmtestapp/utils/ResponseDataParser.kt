@@ -9,12 +9,15 @@ import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-object ResponseDataParser  {
+object ResponseDataParser {
     fun parseCharacterListResponse(json: String?, lastPage: String?): CharactersListDTO {
         if (json == null) return CharactersListDTO()
         val collectionType: Type = object : TypeToken<List<CharactersListDTOitem?>?>() {}.type
         return try {
-            CharactersListDTO(items = Gson().fromJson(json, collectionType), lastPage = lastPage?.toIntOrNull() ?: 0)
+            CharactersListDTO(
+                items = Gson().fromJson(json, collectionType),
+                lastPage = lastPage?.toIntOrNull() ?: 0
+            )
         } catch (e: JsonSyntaxException) {
             CharactersListDTO()
         }
@@ -29,7 +32,10 @@ object ResponseDataParser  {
         }
     }
 
-    fun parseNetworkErrorResponse(error: String?) = ErrorDTO(1, error ?: "Unknown Error")
+    fun parseNetworkErrorResponse(error: String?): ErrorDTO {
+        val errorText = if (error.isNullOrEmpty()) "Unknown Error" else error
+        return ErrorDTO(1, errorText)
+    }
 
     fun getLastPageNumber(links: List<String>?): String {
         if (links == null) return ""
@@ -39,6 +45,6 @@ object ResponseDataParser  {
         return lastLink.substring(startIndex until lastIndex)
     }
 
-    fun getIdFromUrl(url: String, defaultValue: Int) = url.split('/').last().toIntOrNull() ?: defaultValue
-
+    fun getIdFromUrl(url: String, defaultValue: Int) =
+        url.split('/').last().toIntOrNull() ?: defaultValue
 }
