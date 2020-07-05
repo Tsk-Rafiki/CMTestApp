@@ -9,12 +9,14 @@ import com.example.cmtestapp.utils.ResponseDataParser
 
 class CharactersBroadcastReceiver : BroadcastReceiver() {
     companion object {
-        val ACTION_RESPONSE = "com.example.cmtestapp.RESPONSE"
-        val RESPONSE_KEY_OUT = "response_key_out"
-        val RESPONSE_TYPE_KEY = "response_type_key"
+        const val ACTION_RESPONSE = "com.example.cmtestapp.RESPONSE"
+        const val RESPONSE_KEY_OUT = "response_key_out"
+        const val RESPONSE_TYPE_KEY = "response_type_key"
+        const val RESPONSE_LAST_PAGE = "response_last_page"
         enum class ResponseTypeKeys {
             CHARACTERS_LIST_KEY,
-            CHARACTER_DETAILS
+            CHARACTER_DETAILS,
+            NETWORK_ERROR
         }
     }
     val TAG = "CharactersBR"
@@ -27,10 +29,13 @@ class CharactersBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d(TAG, "Get data: $intent")
         val rawData = intent?.getStringExtra(RESPONSE_KEY_OUT)
-        val parsedResult = when(intent?.getStringExtra(RESPONSE_TYPE_KEY)) {
-            ResponseTypeKeys.CHARACTERS_LIST_KEY.name -> ResponseDataParser.parseCharacterListResponse(rawData)
+        val type = intent?.getStringExtra(RESPONSE_TYPE_KEY)
+        val lastPage = intent?.getStringExtra(RESPONSE_LAST_PAGE)
+        val parsedResult = when(type) {
+            ResponseTypeKeys.CHARACTERS_LIST_KEY.name -> ResponseDataParser.parseCharacterListResponse(rawData, lastPage)
             ResponseTypeKeys.CHARACTER_DETAILS.name -> ResponseDataParser.parseCharacterDetailsResponse(rawData)
-            else -> ResponseDataParser.parseCharacterListResponse(rawData)
+            ResponseTypeKeys.NETWORK_ERROR.name -> ResponseDataParser.parseNetworkErrorResponse(rawData)
+            else -> ResponseDataParser.parseNetworkErrorResponse(rawData)
         }
         repository?.setResult(parsedResult)
     }

@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
         val count = supportFragmentManager.backStackEntryCount
         if (count == 1) {
             finish()
-//            super.onBackPressed()
         } else {
             supportFragmentManager.popBackStack()
         }

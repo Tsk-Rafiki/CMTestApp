@@ -45,7 +45,6 @@ class CharactersRepository(private val activity: Activity) : ICharactersReposito
     }
 
     override fun onDestroy() {
-//        networkAsyncTask.removeResultListener()
     }
 
     override fun setResult(result: ICharacterResponse) {

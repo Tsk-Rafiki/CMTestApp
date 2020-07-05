@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy
 import com.example.cmtestapp.R
 import com.example.cmtestapp.models.viewModels.CharactersListViewModel
+import com.example.cmtestapp.models.viewModels.ErrorViewModel
 import com.example.cmtestapp.views.BaseFragment
 import com.example.cmtestapp.presenters.charactersList.ICharactersListPresenter
 import com.example.cmtestapp.views.PaginationListener
@@ -68,6 +70,18 @@ class CharactersListFragment(presenter: ICharactersListPresenter) :
         isLoading = false
         adapter.updateData(data)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun showError(data: ErrorViewModel) {
+        context?.let {
+            val dialog = AlertDialog.Builder(it).apply {
+                setMessage(data.error)
+                setCancelable(true)
+                setTitle("Error")
+                setPositiveButton("Ok"){ dialog ,_ -> dialog.cancel() }
+            }.create()
+            dialog.show()
+        }
     }
 
     companion object {
