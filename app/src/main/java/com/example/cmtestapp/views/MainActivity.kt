@@ -41,25 +41,20 @@ class MainActivity : AppCompatActivity(), OnCharactersListItemClicked {
             addCategory(Intent.CATEGORY_DEFAULT)
         }
         registerReceiver(broadcastReceiver, intentFilter)
-
     }
 
     private fun openCharactersListScreen() {
-        val presenter =
-            CharactersListPresenter(
-                charactersRepository
-            )
-        val charactersListFragment = CharactersListFragment.newInstance(presenter)
+        val presenter = CharactersListPresenter(charactersRepository)
+        val charactersListFragment = CharactersListFragment.newInstance()
+        charactersListFragment.setupPresenter(presenter)
         presenter.setView(charactersListFragment)
         changeFragment(charactersListFragment, Fragments.CharactersList.name)
     }
 
     private fun openCharacterDetailsScreen(characterId: Int) {
-        val presenter =
-            CharacterDetailsPresenter(
-                charactersRepository
-            )
-        val characterDetailsFragment = CharacterDetailsFragment.newInstance(presenter, characterId)
+        val presenter = CharacterDetailsPresenter(charactersRepository)
+        val characterDetailsFragment = CharacterDetailsFragment.newInstance(characterId)
+        characterDetailsFragment.setupPresenter(presenter)
         presenter.setView(characterDetailsFragment)
         changeFragment(characterDetailsFragment, Fragments.CharacterDetails.name)
     }

@@ -16,14 +16,15 @@ import com.example.cmtestapp.presenters.charactersList.ICharactersListPresenter
 import com.example.cmtestapp.views.PaginationListener
 import kotlinx.android.synthetic.main.fragment_characters_list.*
 
-class CharactersListFragment(presenter: ICharactersListPresenter) :
-    BaseFragment<ICharactersListPresenter>(presenter), ICharacterListView {
+class CharactersListFragment : BaseFragment<ICharactersListPresenter>(), ICharacterListView {
     private lateinit var adapter: CharactersListAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var isLoading: Boolean = false
+    override lateinit var presenter: ICharactersListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance = true
         layoutManager = LinearLayoutManager(this.context)
         adapter = CharactersListAdapter(this.activity as OnCharactersListItemClicked).apply {
             setHasStableIds(true)
@@ -78,15 +79,19 @@ class CharactersListFragment(presenter: ICharactersListPresenter) :
                 setMessage(data.error)
                 setCancelable(true)
                 setTitle("Error")
-                setPositiveButton("Ok"){ dialog ,_ -> dialog.cancel() }
+                setPositiveButton("Ok") { dialog, _ -> dialog.cancel() }
             }.create()
             dialog.show()
         }
     }
 
+    override fun setupPresenter(presenter: ICharactersListPresenter) {
+        this.presenter = presenter
+    }
+
     companion object {
         @JvmStatic
-        fun newInstance(presenter: ICharactersListPresenter) = CharactersListFragment(presenter)
+        fun newInstance() = CharactersListFragment()
     }
 
     interface OnCharactersListItemClicked {

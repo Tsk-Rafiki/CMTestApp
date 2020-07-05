@@ -13,12 +13,14 @@ import kotlinx.android.synthetic.main.fragment_character_detailes.*
 
 private const val CHARACTER_ID = "characterId"
 
-class CharacterDetailsFragment(presenter: ICharacterDetailsPresenter) :
-    BaseFragment<ICharacterDetailsPresenter>(presenter), ICharacterDetailsView {
+class CharacterDetailsFragment :
+    BaseFragment<ICharacterDetailsPresenter>(), ICharacterDetailsView {
     private var characterId: Int? = null
+    override lateinit var presenter: ICharacterDetailsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance = true
         arguments?.let {
             characterId = it.getInt(CHARACTER_ID)
         }
@@ -40,8 +42,8 @@ class CharacterDetailsFragment(presenter: ICharacterDetailsPresenter) :
 
     companion object {
         @JvmStatic
-        fun newInstance(presenter: ICharacterDetailsPresenter, characterId: Int) =
-            CharacterDetailsFragment(presenter)
+        fun newInstance(characterId: Int) =
+            CharacterDetailsFragment()
                 .apply {
                     arguments = Bundle().apply {
                         putInt(CHARACTER_ID, characterId)
@@ -56,5 +58,9 @@ class CharacterDetailsFragment(presenter: ICharacterDetailsPresenter) :
         appearsInSeasons?.text = data.tvSeries
         born?.text = data.born
         died?.text = data.died
+    }
+
+    override fun setupPresenter(presenter: ICharacterDetailsPresenter) {
+        this.presenter = presenter
     }
 }

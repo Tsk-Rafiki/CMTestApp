@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.cmtestapp.presenters.IPresenter
 
-abstract class BaseFragment<out T : IPresenter>(open val presenter: T) : Fragment() {
-
+abstract class BaseFragment<out T : IPresenter> : Fragment() {
+    abstract val presenter: T
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("BaseFragment", "[${this.javaClass.canonicalName}]:onCreate()")

@@ -24,14 +24,15 @@ class TestActivity : AppCompatActivity(), CharactersListFragment.OnCharactersLis
     }
 
     fun openCharactersListScreen() {
-        val charactersListFragment = CharactersListFragment.newInstance(charactersListPresenter)
+        val charactersListFragment = CharactersListFragment.newInstance()
+        charactersListFragment.setupPresenter(charactersListPresenter)
         charactersListPresenter.setView(charactersListFragment)
         changeFragment(charactersListFragment, Fragments.CharactersList.name)
     }
 
     fun openCharacterDetailsScreen(characterId: Int) {
-        val characterDetailsFragment =
-            CharacterDetailsFragment.newInstance(characterDetailsPresenter, characterId)
+        val characterDetailsFragment = CharacterDetailsFragment.newInstance(characterId)
+        characterDetailsFragment.setupPresenter(characterDetailsPresenter)
         characterDetailsPresenter.setView(characterDetailsFragment)
         changeFragment(characterDetailsFragment, Fragments.CharacterDetails.name)
     }
