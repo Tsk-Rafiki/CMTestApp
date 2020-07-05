@@ -9,6 +9,7 @@ import com.example.cmtestapp.models.dto.ErrorDTO
 import com.example.cmtestapp.models.dto.ICharacterResponse
 import com.example.cmtestapp.models.viewModels.*
 import com.example.cmtestapp.presenters.BasePresenter
+import com.example.cmtestapp.utils.DtoParser.characterListDtoToViewModel
 import com.example.cmtestapp.utils.ResponseDataParser.getIdFromUrl
 import com.example.cmtestapp.views.charactersList.ICharacterListView
 
@@ -45,18 +46,7 @@ class CharactersListPresenter(private val repository: ICharactersRepository) :
         if (res?.items?.isNotEmpty() == true)
             currentPage++
         pageCount = res?.lastPage ?: CHARACTERS_LIST_LAST_PAGE_DEFAULT_VALUE
-        val result = mutableListOf<BaseViewModel>()
-        val viewModel: MutableList<CharactersListViewModelItem> = res?.items?.filter { it.name.isNotBlank() }?.mapIndexed { index, item ->
-            CharactersListViewModelItem(
-                id = getIdFromUrl(item.url, index),
-                url = item.url,
-                name = item.name,
-                details = item.playedBy[0]
-            )
-        }?.toMutableList() ?: mutableListOf()
-        result.addAll(viewModel)
-        if(viewModel.isNotEmpty() && !isLastPage())
-            result.add(LoadingViewModel())
+        val result = characterListDtoToViewModel(res, isLastPage())
         (view as? ICharacterListView)?.setData(CharactersListViewModel(id = 1, items = result.toList()))
     }
 
