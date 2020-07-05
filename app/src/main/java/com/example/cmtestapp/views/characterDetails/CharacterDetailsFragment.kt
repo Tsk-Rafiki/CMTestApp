@@ -40,7 +40,7 @@ class CharacterDetailsFragment(presenter: ICharacterDetailsPresenter) :
 
     companion object {
         @JvmStatic
-        fun newInstance(presenter: CharacterDetailsPresenter, characterId: Int) =
+        fun newInstance(presenter: ICharacterDetailsPresenter, characterId: Int) =
             CharacterDetailsFragment(presenter)
                 .apply {
                     arguments = Bundle().apply {

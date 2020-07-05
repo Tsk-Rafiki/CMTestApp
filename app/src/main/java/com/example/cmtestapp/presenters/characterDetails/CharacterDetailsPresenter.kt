@@ -1,6 +1,7 @@
 package com.example.cmtestapp.presenters.characterDetails
 
 import android.util.Log
+import com.example.cmtestapp.config.Config.EMPTY_STRING_HOLDER
 import com.example.cmtestapp.models.charactersRepository.ICharactersRepository
 import com.example.cmtestapp.models.dto.CharacterDetailsDTO
 import com.example.cmtestapp.models.dto.ICharacterResponse
@@ -10,8 +11,6 @@ import com.example.cmtestapp.views.characterDetails.ICharacterDetailsView
 
 class CharacterDetailsPresenter(private val repository: ICharactersRepository) :
     BasePresenter(repository), ICharacterDetailsPresenter {
-
-    private val emptyStringHolder = "No Information"
 
     override fun getCharacterDetails(characterId: Int) {
         repository.getCharacterDetails(characterId)
@@ -34,7 +33,6 @@ class CharacterDetailsPresenter(private val repository: ICharactersRepository) :
     }
 
     private fun handleEmptyString(str: String) =
-        if (str.isEmpty()) emptyStringHolder
+        if (str.isEmpty()) EMPTY_STRING_HOLDER
         else str.trim()
-
 }

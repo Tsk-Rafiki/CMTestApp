@@ -27,8 +27,9 @@
                     android:host="www.anapioficeandfire.com"/>
 
             </intent-filter>
-
         </activity>
+        <activity android:name=".views.mock.TestActivity"
+            />
     </application>
 
 </manifest>
