@@ -15,18 +15,20 @@
         <activity android:name=".views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="anapioficeandfire.com"/>
+                <data android:scheme="https"
+                    android:host="www.anapioficeandfire.com"/>
+
+            </intent-filter>
+
         </activity>
-<!--        <receiver -->
-<!--            android:name=".models.CharactersBroadcastReceiver" -->
-<!--            android:enabled="true"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.example.cmtestapp.RESPONSE"/>-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
     </application>
 
 </manifest>
